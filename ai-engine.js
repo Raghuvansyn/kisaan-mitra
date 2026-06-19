@@ -30,6 +30,10 @@ class AIEngine {
   processQuery(query, module = 'auto') {
     const q = query.toLowerCase().trim();
 
+    console.log("QUERY:", q);
+    console.log("CHEMICAL:", this._isChemicalQuery(q));
+    console.log("OFFTOPIC:", this._isOffTopic(q));
+
     // Guardrail: Check for chemical/prohibited terms
     if (this._isChemicalQuery(q)) {
       return this._chemicalGuardrailResponse();
@@ -332,18 +336,18 @@ class AIEngine {
             heading: hi ? '📋 अभी समर्थित फसलें' : '📋 Currently Supported Crops',
             bullets: hi
               ? ['🍅 टमाटर', '🌾 धान', '🌾 गेहूं', '🌿 कपास',
-                 '🧅 प्याज', '🥔 आलू', '🌽 मक्का', '🫘 सोयाबीन']
+                '🧅 प्याज', '🥔 आलू', '🌽 मक्का', '🫘 सोयाबीन']
               : ['🍅 Tomato', '🌾 Rice', '🌾 Wheat', '🌿 Cotton',
-                 '🧅 Onion', '🥔 Potato', '🌽 Maize', '🫘 Soybean'],
+                '🧅 Onion', '🥔 Potato', '🌽 Maize', '🫘 Soybean'],
             type: 'info'
           },
           {
             heading: hi ? '💡 सुझाव' : '💡 Suggestion',
             bullets: hi
               ? ['ऊपर दी गई फसलों में से किसी के बारे में पूछें',
-                 'या अपनी फसल के लक्षण बताएं — मैं सामान्य जैविक उपाय बता सकता हूँ']
+                'या अपनी फसल के लक्षण बताएं — मैं सामान्य जैविक उपाय बता सकता हूँ']
               : ['Ask about one of the supported crops above',
-                 'Or describe your symptoms — I can suggest general organic remedies'],
+                'Or describe your symptoms — I can suggest general organic remedies'],
             type: 'suggestion'
           }
         ]
@@ -684,15 +688,15 @@ class AIEngine {
 
   // FIX 3: Relaxed _isOffTopic — short queries always pass, farming terms list expanded
   _isOffTopic(q) {
-    // FIX: Allow any query ≤5 words — likely a farming question phrased briefly
-    if (q.split(/\s+/).length <= 5) return false;
+    const greetings = ['hello', 'hi', 'hey', 'namaste', 'नमस्ते', 'helo'];
+    if (q.split(/\s+/).length <= 3 && greetings.some(g => q.includes(g))) return false;
 
     const farmingTerms = [
       // English
       'crop', 'plant', 'soil', 'seed', 'farming', 'disease', 'pest', 'weather',
       'price', 'mandi', 'water', 'irrigation', 'harvest', 'compost', 'organic',
       'leaf', 'leaves', 'fruit', 'root', 'flower', 'stem', 'grow', 'fertilizer',
-      'manure', 'spray', 'field', 'sow', 'yield', 'help', 'what', 'how', 'when', 'where',
+      'manure', 'spray', 'field', 'sow', 'yield',
       'yellow', 'brown', 'black', 'white', 'wilt', 'spots', 'rot', 'dry', 'damage',
       // Hindi farming
       'fasal', 'फसल', 'paudha', 'पौधा', 'mitti', 'मिट्टी', 'beej', 'बीज',
