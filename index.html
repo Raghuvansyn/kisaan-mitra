@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="hi-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="KisaanMitra — Voice-Based Natural Farming Consultant. Get instant organic farming guidance in Hindi and English. Crop disease identification, weather forecast, and mandi prices.">
+  <meta name="keywords" content="natural farming, organic farming, crop disease, mandi prices, Jeevamrit, Panchagavya, PGS India, NPOP, kisaan, farmer, Hindi">
+  <meta name="theme-color" content="#0a1a14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <title>KisaanMitra — Voice Natural Farming Consultant 🌾</title>
+  
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="app-header" id="appHeader">
+    <div class="header-content">
+      <div class="app-logo">
+        <span class="app-logo-icon">🌾</span>
+        <div>
+          <span class="app-logo-text" id="logoText">किसानमित्र</span>
+          <span class="app-logo-sub" id="logoSub">प्राकृतिक खेती सहायक</span>
+        </div>
+      </div>
+      <div class="header-controls">
+        <!-- Language Toggle -->
+        <div class="lang-toggle" id="langToggle">
+          <button class="lang-btn active" id="langHi" data-lang="hi-IN" aria-label="Hindi">हिं</button>
+          <button class="lang-btn" id="langEn" data-lang="en-IN" aria-label="English">EN</button>
+        </div>
+        <!-- Region Selector -->
+        <select class="region-select" id="regionSelect" aria-label="Select your region">
+          <option value="punjab">Punjab</option>
+          <option value="maharashtra">Maharashtra</option>
+          <option value="up" selected>UP</option>
+          <option value="karnataka">Karnataka</option>
+          <option value="rajasthan">Rajasthan</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ MODULE TABS ═══ -->
+  <nav class="module-tabs" id="moduleTabs">
+    <div class="tabs-container">
+      <button class="tab-btn active" id="tabDisease" data-module="disease" aria-label="Disease identification">
+        <span class="tab-icon">🌱</span>
+        <span id="tabDiseaseText">रोग पहचान</span>
+      </button>
+      <button class="tab-btn" id="tabWeatherMarket" data-module="weather-market" aria-label="Weather and market">
+        <span class="tab-icon">📊</span>
+        <span id="tabWeatherMarketText">मौसम और बाज़ार</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══ MAIN CHAT AREA ═══ -->
+  <main class="chat-area" id="chatArea" role="main">
+    <!-- Messages will be dynamically inserted here -->
+  </main>
+
+  <!-- ═══ INPUT AREA ═══ -->
+  <footer class="input-area" id="inputArea">
+    <div class="input-container">
+      <!-- Interim transcript preview -->
+      <div class="interim-preview" id="interimPreview"></div>
+      
+      <div class="input-row">
+        <!-- Mic Button -->
+        <button class="mic-btn" id="micBtn" aria-label="Voice input">
+          🎙️
+        </button>
+        
+        <!-- Text Input -->
+        <input 
+          type="text" 
+          class="text-input" 
+          id="textInput" 
+          placeholder="अपना सवाल टाइप करें..."
+          autocomplete="off"
+          aria-label="Type your question"
+        >
+        
+        <!-- Send Button -->
+        <button class="send-btn" id="sendBtn" aria-label="Send" disabled>
+          ➤
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ ONBOARDING OVERLAY ═══ -->
+  <div class="onboarding-overlay" id="onboardingOverlay">
+    <div class="onboarding-card">
+      <div class="onboarding-icon">🌾</div>
+      <h1 class="onboarding-title" id="onboardTitle">किसानमित्र</h1>
+      <p class="onboarding-subtitle" id="onboardSubtitle">
+        आपका प्राकृतिक खेती सहायक — बोलकर या लिखकर सवाल पूछें
+      </p>
+      <div class="onboarding-steps">
+        <div class="onboarding-step">
+          <div class="step-number">1</div>
+          <div class="step-text" id="onboardStep1">
+            <strong>🎙️ माइक दबाएं</strong> — हिंदी या अंग्रेज़ी में बोलें
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <div class="step-number">2</div>
+          <div class="step-text" id="onboardStep2">
+            <strong>🌱 फसल की समस्या बताएं</strong> — "मेरे टमाटर की पत्तियाँ पीली हो रही हैं"
+          </div>
+        </div>
+        <div class="onboarding-step">
+          <div class="step-number">3</div>
+          <div class="step-text" id="onboardStep3">
+            <strong>🌿 जैविक इलाज पाएं</strong> — जीवामृत, नीम, पंचगव्य की विधि
+          </div>
+        </div>
+      </div>
+      <button class="onboarding-start-btn" id="onboardStartBtn">
+        🌱 शुरू करें — Let's Start!
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ TOAST ═══ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="data/diseases.js"></script>
+  <script src="data/weather.js"></script>
+  <script src="data/market.js"></script>
+  <script src="speech.js"></script>
+  <script src="ai-engine.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
